@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export HTFEED_CONFIG=/htapps/babel/feed/etc/config_ingest.yaml
+/htapps/babel/feed/bin/enqueue.pl "$@"

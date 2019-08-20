@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/bin/ls | sed s/.zip// | tr '+=' ':/' | ingest_status -n $1 | grep done | sed 's/: .*//' | cut -f 2 -d '.'

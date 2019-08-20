@@ -1,0 +1,10 @@
+#!/bin/bash
+
+shipment=$1
+url=$2
+
+cd /htprep/toingest/uiuc
+lftp -c "open $url; mget *"
+BUNDLE_GEMFILE=~libadm/ruby/Gemfile bundle exec ruby ~libadm/ruby/get_uiuc_filenames.rb $url
+mv $shipment.txt ~libadm/ingest
+enqueue -y first -p simple -n uiuc ~libadm/ingest/$shipment.txt

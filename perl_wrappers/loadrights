@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export HTFEED_CONFIG=/l/home/libadm/rights_db.yml
+
+perl -I/htapps/babel/feed/lib /htapps/babel/feed/bin/feed.hourly/populate_rights_data.pl "$@"

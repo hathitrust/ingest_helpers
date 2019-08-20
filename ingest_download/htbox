@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cadaver https://dav.box.com/dav/hathitrust-cloud-validator $@

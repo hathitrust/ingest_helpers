@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ext=$1
+shift
+
+mkdir renumbered
+i=1
+for f in "$@"; do
+  new=$(printf "%08d.$ext" "$i") #04 pad to length of 4
+  mv -i -- "$f" "renumbered/$new"
+  let i=i+1
+done

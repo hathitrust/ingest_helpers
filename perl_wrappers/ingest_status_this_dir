@@ -1,0 +1,7 @@
+#!/bin/sh
+
+NAMESPACE=$1
+if [[ -z $NAMESPACE ]];
+  then NAMESPACE=`basename $PWD`
+fi
+/bin/ls | sed s/.zip// | tr '+=' ':/' | ingest_status -n $NAMESPACE

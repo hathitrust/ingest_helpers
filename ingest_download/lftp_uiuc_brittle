@@ -1,0 +1,7 @@
+#!/bin/bash
+
+shipment=$1
+#url=http://hathi.library.illinois.edu/feed/packages/BrittleBooks/2018/submissions/$shipment
+url=http://hathi.library.illinois.edu/feed/packages/BrittleBooks/ready/$shipment
+
+~libadm/bin/get_uiuc $shipment $url

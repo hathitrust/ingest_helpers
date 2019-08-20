@@ -1,0 +1,72 @@
+#!/usr/bin/perl
+
+# 2015-04-06 rrotter
+# My web version of this is too tedious. This is a barebones replacement.
+
+use v5.10;
+use Env qw(HOME);
+my $rights_file_path = $HOME;
+
+my ($user,$reason);
+my $ticket = shift;
+my $attr = shift;
+
+$ticket //= get("ticket");
+$user //= get("user","keden");
+$attr //= get("attr");
+$attr = lc $attr;
+$reason //= get("reason","con");
+
+sub get {
+    my $field = shift;
+    my $default = shift;
+    $default //= "";
+    my $ret = "";
+    until ($ret) {
+        print "$field [$default]: ";
+        $ret = <>;
+        chomp $ret;
+        $ret ||= $default;
+        1;
+    }
+}
+
+print "Enter id list followed by EOF (^D)\n==================================\n";
+
+my $id_str="";
+while(<>){$id_str.=$_;}
+
+my @id_list = split /\s+/, $id_str;
+shift @id_list unless ($id_list[0]); # trim leading empty field
+
+my $filename;
+{
+    my @d = localtime(); $d[5]+=1900; $d[4]+=1;
+    my $date = sprintf("%04d%02d%02d",$d[5],$d[4],$d[3]);
+    $filename = "${rights_file_path}/${ticket}_$date";
+}
+
+my $mode = '>';
+if (-e $filename) {
+    print "$filename exists. Will append by default. Overwrite instead? [N/y]";
+    my $yorn = <>;
+    if ($yorn =~ /^[Yy]/) {
+        say "Overwriting $filename";
+    }
+    else {
+        say "Appending $filename";
+        $mode = '>>';
+    }
+}
+open(my $fh, $mode, $filename) or die "Could not open file '$filename' $!";
+
+while (@id_list) {
+    my $id = shift @id_list;
+    say $fh join("\t",$id,$attr,$reason,$user);
+}
+
+close $fh;
+
+print qq|saved. load as libadm with:\n ~/loadrights --data="$filename" --note="$ticket"\n|
+
+#print "($ticket,$user,$attr,$reason,$filename)\n";

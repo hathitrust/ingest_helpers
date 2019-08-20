@@ -1,0 +1,24 @@
+#!/bin/bash
+
+namespace="$1"
+folder="$2"
+idfile="$3"
+
+if [[ -z "$3" || -z "$2" || -z "$1" ]];
+then echo "Usage: $0 namespace box_folder idfile"; exit 1;
+fi
+
+lftp -f <(echo "open ftp.box.com"; echo "lcd /htprep/toingest/$1"; echo "cd hathitrust-cloud-validator/'$2'"; cat $3 | sed 's/\(.*\)/mget \1.zip*/' | tr ':/' '+='; echo "exit")
+
+while read id; do
+  escaped=`echo "$id" | tr ':/' '+='`
+  zipname="/htprep/toingest/$1/${escaped}.zip"
+
+  if ! [ -e "$zipname" ]; then
+    if [ -e "${zipname}.001" ]; then
+      cat "$zipname".* > "$zipname" && rm "$zipname".*
+    fi
+  fi
+done < "$3"
+
+enqueue -p simple -n $1 $3

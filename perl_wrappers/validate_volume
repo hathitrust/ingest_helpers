@@ -1,0 +1,4 @@
+#!/bin/bash
+
+HTFEED_CONFIG=/htapps/babel/feed/etc/config_prevalidate.yaml
+/htapps/babel/feed/bin/validate_volume.pl "$@"
