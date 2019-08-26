@@ -5,7 +5,7 @@
 
 use v5.10;
 use Env qw(HOME);
-my $rights_file_path = $HOME;
+my $rights_file_path = "$HOME/rights";
 
 my ($user,$reason);
 my $ticket = shift;
