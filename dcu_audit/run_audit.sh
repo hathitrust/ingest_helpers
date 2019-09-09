@@ -29,13 +29,13 @@ grep MD5_CHECK_OK $THIS_AUDIT/status | cut -f 1 | sed 's/^\.\///' | sort > $THIS
   then echo "Empty folders removed:"
   sed 's/^\.\///' < $THIS_AUDIT/empty_dirs;
   else echo "No empty folders removed.";
-  fi ) | mail -s "Digifeeds ingested $(date +"%Y-%m-%d")" -a $THIS_AUDIT/digifeeds_ingested_$TODAY.txt dcu-ht-ingest@umich.edu
+  fi ) | heirloom-mailx -s "Digifeeds ingested $(date +"%Y-%m-%d")" -a $THIS_AUDIT/digifeeds_ingested_$TODAY.txt dcu-ht-ingest@umich.edu
 
 # find & send items that need source changed to lit-dlps-dc
 perl -I /htapps/babel/feed/lib -w /l/home/libadm/dcu_audit/check_source.pl $THIS_AUDIT/barcodes > $THIS_AUDIT/need_source_change
 grep "bib google" $THIS_AUDIT/need_source_change | grep -v 69015 > $THIS_AUDIT/digifeeds_needing_source_change_$TODAY.txt
 if [ -s $THIS_AUDIT/digifeeds_needing_source_change_$TODAY.txt ];
-then echo "Digifeeds needing source change to lit-dlps-dc are attached" | mail -s "Digifeeds needing source change $(date +"%Y-%m-%d")" -a $THIS_AUDIT/digifeeds_needing_source_change_$TODAY.txt lit-cs-ingest@umich.edu timothy@umich.edu khage@umich.edu;
+then echo "Digifeeds needing source change to lit-dlps-dc are attached" | heirloom-mailx -s "Digifeeds needing source change $(date +"%Y-%m-%d")" -a $THIS_AUDIT/digifeeds_needing_source_change_$TODAY.txt lit-cs-ingest@umich.edu timothy@umich.edu khage@umich.edu;
 fi
 
 if [ -e $THIS_AUDIT/digifeeds_non_bib_$TODAY.txt ]
@@ -45,5 +45,5 @@ fi
 grep "google" $THIS_AUDIT/need_source_change | grep -v 'bib ' >> $THIS_AUDIT/digifeeds_non_bib_$TODAY.txt
 grep "69015" $THIS_AUDIT/need_source_change >> $THIS_AUDIT/digifeeds_non_bib_$TODAY.txt
 if [ -s $THIS_AUDIT/digifeeds_non_bib_$TODAY.txt ]
-then echo "Digifeeds needing source change to lit-dlps-dc that are not bib-determined are attached; Core Services will update the rights." | mail -s "Digifeeds needing source change (non-bib) $(date +"%Y-%m-%d")" -a $THIS_AUDIT/digifeeds_non_bib_$TODAY.txt lit-cs-ingest@umich.edu khage@umich.edu timothy@umich.edu;
+then echo "Digifeeds needing source change to lit-dlps-dc that are not bib-determined are attached; Core Services will update the rights." | heirloom-mailx -s "Digifeeds needing source change (non-bib) $(date +"%Y-%m-%d")" -a $THIS_AUDIT/digifeeds_non_bib_$TODAY.txt lit-cs-ingest@umich.edu khage@umich.edu timothy@umich.edu;
 fi
