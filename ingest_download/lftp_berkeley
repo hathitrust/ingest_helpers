@@ -1,0 +1,6 @@
+#!/bin/bash
+
+shipment=$1
+url=https://digitalassets.lib.berkeley.edu/to_hathi/$shipment/
+
+~libadm/bin/get_http $shipment $url ucbk

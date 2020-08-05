@@ -1,0 +1,11 @@
+#!/bin/bash
+
+shipment=$1
+url=$2
+namespace=$3
+
+cd /htprep/toingest/$namespace
+lftp -c "open $url; mget *"
+BUNDLE_GEMFILE=~libadm/ruby/Gemfile bundle exec ruby ~libadm/ruby/get_http_filenames.rb $url $namespace
+mv ${namespace}_$shipment.txt ~libadm/ingest
+enqueue -p simple -n $namespace ~libadm/ingest/${namespace}_$shipment.txt

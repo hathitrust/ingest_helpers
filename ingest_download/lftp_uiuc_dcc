@@ -3,4 +3,4 @@
 shipment=$1
 url=http://hathi.library.illinois.edu/feed/packages/DCC/$shipment
 
-~libadm/bin/get_uiuc $shipment $url
+~libadm/bin/get_http $shipment $url uiuc
