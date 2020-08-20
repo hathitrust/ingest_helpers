@@ -1,0 +1,13 @@
+#!/bin/bash
+
+retry=""
+
+if [[ $1 == "-r" ]]; then
+  shift
+  retry="-r"
+fi
+
+shipment=$1
+url=sftp://tang.umdl.umich.edu:/quod-prep/prep/d/dcu/DCU_Image_Processing/7_Direct_Ingest/$shipment/
+
+~libadm/bin/get_sftp $retry $shipment $url mdp
