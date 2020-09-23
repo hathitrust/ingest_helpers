@@ -1,0 +1,15 @@
+#!/bin/bash
+
+retry=""
+
+if [[ $1 == "-r" ]]; then
+  shift
+  retry="-r"
+fi
+
+boxfolder=$1
+namespace=$2
+shipment=$3
+url="ftp://hathitrust-cloud-validator@umich.edu@ftp.box.com/hathitrust-cloud-validator/$boxfolder/$shipment"
+
+~/bin/get_sftp $retry $shipment $url $namespace
