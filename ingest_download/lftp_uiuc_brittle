@@ -12,4 +12,4 @@ shipment=$1
 #url=http://hathi.library.illinois.edu/feed/packages/BrittleBooks/2018/submissions/$shipment
 url=http://hathi.library.illinois.edu/feed/packages/BrittleBooks/ready/$shipment
 
-~libadm/bin/get_http $retry $shipment $url uiuc
+~libadm/bin/get_lftp $retry $shipment $url uiuc

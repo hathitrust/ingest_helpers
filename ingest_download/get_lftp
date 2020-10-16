@@ -14,6 +14,6 @@ url=$2
 namespace=$3
 
 cd /htprep/toingest/$namespace
-lftp -c "open $url; $overwrite; mget *"
-lftp -c "open $url; ls" | sed 's/.* //' | grep '.zip' | sed 's/\.zip//' > ~libadm/ingest/${namespace}_$shipment.txt
+lftp -c "open '$url'; $overwrite; mget *"
+lftp -c "open '$url'; ls" | sed 's/.* //' | grep '.zip' | sed 's/\.zip//' | tr '+=' ':/' > ~libadm/ingest/${namespace}_$shipment.txt
 enqueue $retry -p simple -n $namespace ~libadm/ingest/${namespace}_$shipment.txt

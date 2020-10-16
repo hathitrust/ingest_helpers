@@ -12,4 +12,4 @@ namespace=$2
 shipment=$3
 url="ftp://hathitrust-cloud-validator@umich.edu@ftp.box.com/hathitrust-cloud-validator/$boxfolder/$shipment"
 
-~/bin/get_sftp $retry $shipment $url $namespace
+~/bin/get_lftp $retry $shipment $url $namespace
