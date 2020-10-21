@@ -11,4 +11,4 @@ fi
 shipment=$1
 url="https://$BERKELEY_USERINFO@digitalassets.lib.berkeley.edu/hathitrust_submission/$shipment/"
 
-echo ~libadm/bin/get_lftp $retry $shipment "$url" ucbk
+~libadm/bin/get_lftp $retry $shipment "$url" ucbk
