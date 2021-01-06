@@ -5,7 +5,7 @@ overwrite=""
 
 if [[ $1 == "-r" ]]; then
   shift
-  retry="-i -r"
+  retry="-r"
   overwrite="set xfer:clobber 1"
 fi
 
@@ -16,4 +16,4 @@ namespace=$3
 cd /htprep/toingest/$namespace
 lftp -c "open '$url'; $overwrite; mget *"
 lftp -c "open '$url'; ls" | sed 's/.* //' | grep '.zip' | sed 's/\.zip//' | tr '+=' ':/' > ~libadm/ingest/${namespace}_$shipment.txt
-enqueue $retry -p simple -n $namespace ~libadm/ingest/${namespace}_$shipment.txt
+enqueue -i $retry -p simple -n $namespace ~libadm/ingest/${namespace}_$shipment.txt

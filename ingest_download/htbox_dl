@@ -5,7 +5,7 @@ overwrite=""
 
 if [[ $1 == "-r" ]]; then
   shift
-  retry="-i -r"
+  retry="-r"
   overwrite="set xfer:clobber 1"
 fi
 
@@ -31,4 +31,4 @@ while read id; do
   fi
 done < "$barcodes"
 
-enqueue $retry -p simple -n $namespace $barcodes
+enqueue -i $retry -p simple -n $namespace $barcodes
