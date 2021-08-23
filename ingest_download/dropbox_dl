@@ -28,4 +28,4 @@ while read id; do
 
 done < "$barcodes"
 
-# enqueue -i $retry -p simple -n $namespace $barcodes
+enqueue -i $retry -p simple -n $namespace $barcodes
