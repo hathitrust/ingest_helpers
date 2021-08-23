@@ -1,0 +1,31 @@
+#!/bin/bash
+
+retry=""
+overwrite=""
+dropbox_base="hathitrust-ingest:ULIB-hathitrust-ingest"
+prep_base="/htprep/toingest"
+
+if [[ $1 == "-r" ]]; then
+  shift
+  retry="-r"
+  overwrite="set xfer:clobber 1"
+fi
+
+
+if [[ -z "$3" || -z "$2" || -z "$1" ]];
+then echo "Usage: $0 namespace folder idfile"; exit 1;
+fi
+
+namespace=$1
+folder=$2
+barcodes=$3
+
+while read id; do
+  escaped=`echo "$id" | tr ':/' '+='`
+  target_name="$prep_base/$namespace/${escaped}.zip"
+
+  rclone copy -P "$dropbox_base/$folder/${escaped}.zip" $target_name
+
+done < "$barcodes"
+
+enqueue -i $retry -p simple -n $namespace $barcodes
