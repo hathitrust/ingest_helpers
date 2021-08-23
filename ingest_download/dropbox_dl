@@ -3,7 +3,7 @@
 retry=""
 overwrite=""
 dropbox_base="hathitrust-ingest:ULIB-hathitrust-ingest"
-prep_base="/htprep/toingest"
+prep_base="/tmp/toingest"
 
 if [[ $1 == "-r" ]]; then
   shift
@@ -22,10 +22,10 @@ barcodes=$3
 
 while read id; do
   escaped=`echo "$id" | tr ':/' '+='`
-  target_name="$prep_base/$namespace/${escaped}.zip"
+  target_name="$prep_base/$namespace/"
 
   rclone copy -P "$dropbox_base/$folder/${escaped}.zip" $target_name
 
 done < "$barcodes"
 
-enqueue -i $retry -p simple -n $namespace $barcodes
+# enqueue -i $retry -p simple -n $namespace $barcodes
