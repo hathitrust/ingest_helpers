@@ -3,7 +3,7 @@
 retry=""
 overwrite=""
 dropbox_base="hathitrust-ingest:ULIB-hathitrust-ingest"
-prep_base="/tmp/toingest"
+prep_base="/htprep/toingest"
 
 if [[ $1 == "-r" ]]; then
   shift
