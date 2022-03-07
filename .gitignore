@@ -1,0 +1,5 @@
+k8s/k8s-ca.crt
+k8s/token
+k8s/kubectl
+ruby/.bundle
+ruby/.vendor

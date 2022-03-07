@@ -1,4 +1,5 @@
 #!/bin/bash
 
-HTFEED_CONFIG=/htapps/babel/feed/etc/config_ingest.yaml
-/htapps/babel/feed/bin/ingest_status.pl "$@"
+source $(dirname $(realpath $0))/k8s_helpers.sh
+
+$kubeexec bin/ingest_status.pl $(pathify_args "$@")

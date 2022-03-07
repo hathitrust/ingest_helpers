@@ -1,4 +1,5 @@
 #!/bin/bash
 
-export HTFEED_CONFIG=/htapps/babel/feed/etc/config_ingest.yaml
-/htapps/babel/feed/bin/enqueue.pl "$@"
+source $(dirname $(realpath $0))/k8s_helpers.sh
+
+$kubeexec bin/enqueue.pl $(pathify_args "$@" )

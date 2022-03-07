@@ -1,0 +1,5 @@
+#!/bin/bash
+
+path=$(dirname $(realpath $0))
+
+$path/kubectl exec deployment/ingest-client -i -- $@
