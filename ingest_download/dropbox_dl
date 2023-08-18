@@ -1,14 +1,12 @@
 #!/bin/bash
 
 retry=""
-overwrite=""
 dropbox_base="hathitrust-ingest:ULIB-hathitrust-ingest"
 prep_base="/htprep/toingest"
 
-if [[ $1 == "-r" ]]; then
+if [[ $1 == "-r" || $1 == "-R" ]]; then
+  retry=$1
   shift
-  retry="-r"
-  overwrite="set xfer:clobber 1"
 fi
 
 

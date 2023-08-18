@@ -3,9 +3,9 @@
 retry=""
 overwrite=""
 
-if [[ $1 == "-r" ]]; then
+if [[ $1 == "-r" || $1 == "-R" ]]; then
+  retry=$1
   shift
-  retry="-r"
   overwrite="set xfer:clobber 1"
 fi
 

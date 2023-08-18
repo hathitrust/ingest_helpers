@@ -2,9 +2,9 @@
 
 retry=""
 
-if [[ $1 == "-r" ]]; then
+if [[ $1 == "-r" || $1 == "-R" ]]; then
+  retry=$1
   shift
-  retry="-r"
 fi
 
 

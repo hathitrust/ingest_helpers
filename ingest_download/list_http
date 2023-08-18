@@ -1,14 +1,5 @@
 #!/bin/bash
 
-retry=""
-overwrite=""
-
-if [[ $1 == "-r" ]]; then
-  shift
-  retry="-i -r"
-  overwrite="set xfer:clobber 1"
-fi
-
 shipment=$1
 url=$2
 namespace=$3
