@@ -1,4 +1,7 @@
 #!/bin/bash
 
-HTFEED_CONFIG=/htapps/babel/feed/etc/config_prevalidate.yaml
-/htapps/babel/feed/bin/validate_volume.pl "$@"
+#!/bin/bash
+
+source $(dirname $(realpath $0))/k8s_helpers.sh
+
+$kubeexec bin/validate_volume.pl "$@"
