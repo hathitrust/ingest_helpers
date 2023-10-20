@@ -13,7 +13,33 @@ shipment=$1
 url=$2
 namespace=$3
 
+items_list=~libadm/ingest/${namespace}_$shipment.txt
+
 cd /htprep/toingest/$namespace
 lftp -c "open '$url'; $overwrite; mget *"
-lftp -c "open '$url'; ls" | sed 's/.* //' | grep '.zip' | sed 's/\.zip//' | tr '+=' ':/' > ~libadm/ingest/${namespace}_$shipment.txt
-enqueue -i $retry -p simple -n $namespace ~libadm/ingest/${namespace}_$shipment.txt
+files=$(lftp -c "open '$url'; ls" | sed 's/.* //' | grep '.zip')
+failures=""
+
+# Check that everything was really downloaded; retry any failures
+for file in $files;
+do 
+  if [[ ! -e $file ]]; then
+    echo "Retrying download of $file"
+    lftp -c "open '$url'; get '$file'"
+  fi
+
+  if [[ -e $file ]]; then
+    echo $file | sed 's/\.zip//' | tr '+=' ':/' >> $items_list
+  else
+    echo "Downloading $file still failed after retry!"
+    failures="$failures $file"
+  fi
+done
+
+echo "Enqueueing items from $items_list"
+
+enqueue -v -i $retry -p simple -n $namespace $items_list
+
+for failure in $failures; do
+  echo "ERROR: failed to download $failure";
+done
